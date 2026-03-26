@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Movimientos - Alke Wallet{% endblock %}
+{% block header_title %}Movimientos{% endblock %}
+{% block nav_transactions %}active{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/transactions.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-start justify-content-center" style="min-height: 100%;">
+    <div class="page-card transactions-card">
+
+        <h4 class="fw-bold mb-4" style="color: #1a1a2e;">Últimos Movimientos</h4>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Tipo</th>
+                        <th class="col-detalle">Detalle</th>
+                        <th class="text-end">Monto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if movimientos %}
+                        {% for mov in movimientos %}
+                        <tr>
+                            <td>{{ mov.fecha }}</td>
+                            <td>{{ mov.tipo }}</td>
+                            <td class="col-detalle">{{ mov.detalle }}</td>
+                            <td class="text-end fw-bold
+                                {% if 'Depósito' in mov.tipo %}text-success
+                                {% else %}text-danger{% endif %}">
+                                {{ mov.monto }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="4">
+                                <div class="empty-state">
+                                    <i class="bi bi-inbox"></i>
+                                    No hay movimientos registrados.
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'javascript/transactions.js' %}"></script>
+{% endblock %}

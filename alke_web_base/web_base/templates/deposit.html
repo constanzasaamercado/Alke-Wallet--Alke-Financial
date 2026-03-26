@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Depositar - Alke Wallet{% endblock %}
+{% block header_title %}Depositar{% endblock %}
+{% block nav_deposit %}active{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/deposit.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-start justify-content-center" style="min-height: 100%;">
+    <div class="page-card">
+
+        <h4 class="fw-bold mb-4" style="color: #1a1a2e;">Depositar Dinero</h4>
+
+        <div class="saldo-badge">
+            <div class="label">Saldo disponible</div>
+            <div class="valor">$ {{ saldo_actual }}</div>
+        </div>
+
+        <form method="POST" action="{% url 'deposit' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="depositAmount" class="form-label fw-semibold">Monto a depositar</label>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input type="number" class="form-control form-control-lg"
+                           name="monto" id="depositAmount"
+                           placeholder="0" min="1" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-2 mt-2 fw-semibold">
+                Confirmar Depósito
+            </button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'javascript/deposit.js' %}"></script>
+{% endblock %}
