@@ -133,6 +133,19 @@ def send_money_view(request):
     }
     return render(request, 'sendmoney.html', context)
 
+# ── Eliminar contacto ──
+def delete_contact_view(request, contacto_id):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('login')
+
+    try:
+        contacto = Contacto.objects.get(id=contacto_id, usuario_id=usuario_id)
+        contacto.delete()
+    except Contacto.DoesNotExist:
+        pass
+
+    return redirect('send_money')
 
 # ── Transacciones ──
 def transactions_view(request):

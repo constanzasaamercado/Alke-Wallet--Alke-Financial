@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Enviar Dinero - Alke Wallet{% endblock %}
-{% block header_title %}Enviar Dinero{% endblock %}
+{% block title %}Transferencia - Alke Wallet{% endblock %}
+{% block header_title %}Transferencia{% endblock %}
 {% block nav_send %}active{% endblock %}
 
 {% block extra_css %}
@@ -72,7 +72,7 @@
     <div class="page-card">
 
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h4 class="fw-bold mb-0" style="color: #1a1a2e;">Enviar Dinero</h4>
+            <h4 class="fw-bold mb-0" style="color: #1a1a2e;">Transferencia</h4>
             <button type="button" class="btn btn-sm btn-outline-primary"
                     data-bs-toggle="modal" data-bs-target="#modalContacto">
                 <i class="bi bi-person-plus me-1"></i> Nuevo Contacto
@@ -109,13 +109,18 @@
                         <div class="contacto-avatar">
                             {{ c.nombre|slice:":1" }}
                         </div>
-                        <div class="contacto-info">
+                        <div class="contacto-info" style="flex-grow: 1;">
                             <div class="nombre">{{ c.nombre }}</div>
                             <div class="detalle">
                                 {% if c.alias %}{{ c.alias }}{% endif %}
                                 {% if c.banco %} · {{ c.banco }}{% endif %}
                             </div>
                         </div>
+                        <a href="{% url 'delete_contact' c.id %}"
+                           class="btn btn-sm btn-outline-danger ms-auto"
+                           onclick="event.stopPropagation(); return confirm('¿Eliminar a {{ c.nombre }}?')">
+                            <i class="bi bi-trash"></i>
+                        </a>
                     </div>
                     {% empty %}
                     <div id="sin-resultados">No hay contactos guardados.</div>
@@ -207,11 +212,11 @@
 
 {% block extra_js %}
 <script>
-    const busqueda       = document.getElementById('busqueda-contacto');
-    const items          = document.querySelectorAll('.contacto-item');
-    const inputOculto    = document.getElementById('contacto-seleccionado');
+    const busqueda        = document.getElementById('busqueda-contacto');
+    const items           = document.querySelectorAll('.contacto-item');
+    const inputOculto     = document.getElementById('contacto-seleccionado');
     const contactoElegido = document.getElementById('contacto-elegido');
-    const nombreElegido  = document.getElementById('nombre-elegido');
+    const nombreElegido   = document.getElementById('nombre-elegido');
 
     // ── Filtrar contactos al escribir ──
     busqueda.addEventListener('input', function () {
@@ -231,7 +236,6 @@
             }
         });
 
-        // Mostrar mensaje si no hay resultados
         let sinRes = document.getElementById('sin-resultados');
         if (!sinRes) {
             sinRes = document.createElement('div');
@@ -245,17 +249,13 @@
     // ── Seleccionar contacto al hacer click ──
     items.forEach(item => {
         item.addEventListener('click', function () {
-            // Deseleccionar todos
             items.forEach(i => i.classList.remove('selected'));
-
-            // Seleccionar este
             this.classList.add('selected');
 
             const nombre = this.dataset.nombre;
             inputOculto.value = nombre;
             busqueda.value = nombre;
 
-            // Mostrar confirmación
             nombreElegido.textContent = nombre;
             contactoElegido.classList.remove('d-none');
         });
