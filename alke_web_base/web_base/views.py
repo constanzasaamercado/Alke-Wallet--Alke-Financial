@@ -170,3 +170,31 @@ def transactions_view(request):
 
     context = {'movimientos': movimientos}
     return render(request, 'transactions.html', context)
+
+# ── Registro ──
+def register_view(request):
+    error = None
+
+    if request.method == 'POST':
+        nombre   = request.POST.get('nombre', '').strip()
+        correo   = request.POST.get('correo', '').strip()
+        password = request.POST.get('password', '').strip()
+
+        if not nombre or not correo or not password:
+            error = 'Todos los campos son obligatorios.'
+        elif Usuario.objects.filter(correo=correo).exists():
+            error = 'Ya existe una cuenta con ese correo.'
+        else:
+            import random
+            numero_cuenta = str(random.randint(100000000000, 999999999999))
+            usuario = Usuario.objects.create(
+                nombre=nombre,
+                correo=correo,
+                password=password,
+                numero_cuenta=numero_cuenta,
+                saldo=0
+            )
+            request.session['usuario_id'] = usuario.id
+            return redirect('menu')
+
+    return render(request, 'register.html', {'error': error})
