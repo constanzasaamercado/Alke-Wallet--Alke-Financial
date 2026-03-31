@@ -7,7 +7,6 @@
 
 {% block extra_css %}
 <style>
-    /* Búsqueda de contactos */
     #busqueda-contacto {
         border-radius: 8px 8px 0 0;
         border-bottom: 1px solid #dee2e6;
@@ -35,9 +34,7 @@
     .contacto-item:last-child { border-bottom: none; }
 
     .contacto-item:hover,
-    .contacto-item.selected {
-        background: #e8f0fe;
-    }
+    .contacto-item.selected { background: #e8f0fe; }
 
     .contacto-avatar {
         width: 38px;
@@ -55,7 +52,6 @@
 
     .contacto-info .nombre { font-weight: 600; font-size: 0.9rem; color: #1a1a2e; }
     .contacto-info .detalle { font-size: 0.78rem; color: #6c757d; }
-
     .contacto-item.selected .contacto-avatar { background: #0b5ed7; }
 
     #sin-resultados {
@@ -63,6 +59,25 @@
         text-align: center;
         color: #6c757d;
         font-size: 0.88rem;
+    }
+
+    /* Modal eliminar */
+    #modalEliminar .modal-content {
+        border-radius: 16px;
+        border: none;
+    }
+
+    #modalEliminar .icono-eliminar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #fff0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.6rem;
+        color: #dc3545;
     }
 </style>
 {% endblock %}
@@ -85,20 +100,15 @@
 
         <form method="POST" action="{% url 'send_money' %}">
             {% csrf_token %}
-
-            <!-- Campo oculto que guarda el contacto seleccionado -->
             <input type="hidden" name="contacto" id="contacto-seleccionado" value="">
 
             <div class="mb-3">
                 <label class="form-label fw-semibold">Buscar Contacto</label>
-
-                <!-- Input de búsqueda -->
                 <input type="text" id="busqueda-contacto"
                        class="form-control form-control-lg"
                        placeholder="Buscar por nombre, alias o correo..."
                        autocomplete="off">
 
-                <!-- Lista de contactos filtrada -->
                 <div id="lista-contactos">
                     {% for c in contactos %}
                     <div class="contacto-item"
@@ -106,9 +116,7 @@
                          data-alias="{{ c.alias }}"
                          data-correo="{{ c.correo }}"
                          data-banco="{{ c.banco }}">
-                        <div class="contacto-avatar">
-                            {{ c.nombre|slice:":1" }}
-                        </div>
+                        <div class="contacto-avatar">{{ c.nombre|slice:":1" }}</div>
                         <div class="contacto-info" style="flex-grow: 1;">
                             <div class="nombre">{{ c.nombre }}</div>
                             <div class="detalle">
@@ -116,18 +124,19 @@
                                 {% if c.banco %} · {{ c.banco }}{% endif %}
                             </div>
                         </div>
-                        <a href="{% url 'delete_contact' c.id %}"
-                           class="btn btn-sm btn-outline-danger ms-auto"
-                           onclick="event.stopPropagation(); return confirm('¿Eliminar a {{ c.nombre }}?')">
+                        <button type="button"
+                                class="btn btn-sm btn-outline-danger ms-auto btn-eliminar"
+                                data-url="{% url 'delete_contact' c.id %}"
+                                data-nombre="{{ c.nombre }}"
+                                onclick="event.stopPropagation();">
                             <i class="bi bi-trash"></i>
-                        </a>
+                        </button>
                     </div>
                     {% empty %}
                     <div id="sin-resultados">No hay contactos guardados.</div>
                     {% endfor %}
                 </div>
 
-                <!-- Contacto seleccionado -->
                 <div id="contacto-elegido" class="mt-2 d-none">
                     <small class="text-success fw-semibold">
                         <i class="bi bi-check-circle me-1"></i>
@@ -175,36 +184,53 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Nombre y Apellido</label>
-                        <input type="text" name="nombre" class="form-control"
-                               placeholder="Ej: Juan Pérez" required>
+                        <input type="text" name="nombre" class="form-control" placeholder="Ej: Juan Pérez" required>
                     </div>
                     <div class="mb-2">
                         <label class="form-label fw-semibold">Número de CBU</label>
-                        <input type="text" name="cbu" class="form-control"
-                               placeholder="Ej: 1234567890123456789012" maxlength="22">
+                        <input type="text" name="cbu" class="form-control" placeholder="Ej: 1234567890123456789012" maxlength="22">
                     </div>
                     <div class="mb-2">
                         <label class="form-label fw-semibold">Alias</label>
-                        <input type="text" name="alias" class="form-control"
-                               placeholder="Ej: juan.perez" maxlength="22">
+                        <input type="text" name="alias" class="form-control" placeholder="Ej: juan.perez" maxlength="22">
                     </div>
                     <div class="mb-2">
                         <label class="form-label fw-semibold">Nombre del Banco</label>
-                        <input type="text" name="banco" class="form-control"
-                               placeholder="Ej: Banco Patito" maxlength="50">
+                        <input type="text" name="banco" class="form-control" placeholder="Ej: Banco Patito" maxlength="50">
                     </div>
                     <div class="mb-2">
                         <label class="form-label fw-semibold">Correo electrónico</label>
-                        <input type="email" name="correo" class="form-control"
-                               placeholder="Ej: juan@correo.com">
+                        <input type="email" name="correo" class="form-control" placeholder="Ej: juan@correo.com">
                     </div>
                 </div>
                 <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-outline-secondary"
-                            data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Confirmar Eliminar -->
+<div class="modal fade" id="modalEliminar" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content shadow-lg">
+            <div class="modal-body text-center py-4 px-4">
+                <div class="icono-eliminar">
+                    <i class="bi bi-person-x"></i>
+                </div>
+                <h6 class="fw-bold mb-1" style="color: #1a1a2e;">¿Eliminar contacto?</h6>
+                <p class="text-muted mb-4" style="font-size: 0.9rem;">
+                    Se eliminará a <strong id="nombreAEliminar"></strong> de tu lista.
+                </p>
+                <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-outline-secondary flex-grow-1"
+                            data-bs-dismiss="modal">Cancelar</button>
+                    <a id="btnConfirmarEliminar" href="#"
+                       class="btn btn-danger flex-grow-1">Eliminar</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -218,7 +244,7 @@
     const contactoElegido = document.getElementById('contacto-elegido');
     const nombreElegido   = document.getElementById('nombre-elegido');
 
-    // ── Filtrar contactos al escribir ──
+    // ── Filtrar contactos ──
     busqueda.addEventListener('input', function () {
         const q = this.value.toLowerCase();
         let hayResultados = false;
@@ -246,18 +272,29 @@
         sinRes.textContent = hayResultados ? '' : 'No se encontraron contactos.';
     });
 
-    // ── Seleccionar contacto al hacer click ──
+    // ── Seleccionar contacto ──
     items.forEach(item => {
         item.addEventListener('click', function () {
             items.forEach(i => i.classList.remove('selected'));
             this.classList.add('selected');
-
             const nombre = this.dataset.nombre;
             inputOculto.value = nombre;
             busqueda.value = nombre;
-
             nombreElegido.textContent = nombre;
             contactoElegido.classList.remove('d-none');
+        });
+    });
+
+    // ── Modal eliminar ──
+    const modalEliminar = new bootstrap.Modal(document.getElementById('modalEliminar'));
+
+    document.querySelectorAll('.btn-eliminar').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const nombre = this.dataset.nombre;
+            const url    = this.dataset.url;
+            document.getElementById('nombreAEliminar').textContent = nombre;
+            document.getElementById('btnConfirmarEliminar').href = url;
+            modalEliminar.show();
         });
     });
 </script>
