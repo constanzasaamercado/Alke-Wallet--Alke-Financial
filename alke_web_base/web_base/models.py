@@ -7,6 +7,7 @@ class Usuario(models.Model):
     password    = models.CharField(max_length=100)
     numero_cuenta = models.CharField(max_length=20, default='123456789')
     saldo       = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    ultimo_acceso = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.nombre} ({self.correo})'

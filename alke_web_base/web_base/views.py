@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Usuario, Contacto, Transaccion
-
+from django.utils import timezone
 
 # ── Login ──
 def login_view(request):
@@ -13,12 +13,20 @@ def login_view(request):
         try:
             usuario = Usuario.objects.get(correo=correo, password=password)
             request.session['usuario_id'] = usuario.id
+
+            # Guardar el último acceso anterior en sesión
+            ultimo = usuario.ultimo_acceso
+            request.session['ultimo_acceso'] = ultimo.strftime('%d %b %Y %H:%M') if ultimo else 'Primer acceso'
+
+            # Actualizar último acceso en la base de datos
+            usuario.ultimo_acceso = timezone.now()
+            usuario.save()
+
             return redirect('menu')
         except Usuario.DoesNotExist:
             error = 'Correo o contraseña incorrectos.'
 
     return render(request, 'login.html', {'error': error})
-
 
 # ── Menú principal ──
 def menu_view(request):
