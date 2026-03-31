@@ -10,9 +10,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="d-flex align-items-start justify-content-center" style="min-height: 100%;">
-    <div class="page-card">
+<div class="d-flex flex-column align-items-center pt-4 px-3 pb-4">
 
+    <div class="page-card mb-4">
         <h4 class="fw-bold mb-4" style="color: #1a1a2e;">Depositar Dinero</h4>
 
         <div class="saldo-badge">
@@ -26,17 +26,44 @@
                 <label for="depositAmount" class="form-label fw-semibold">Monto a depositar</label>
                 <div class="input-group">
                     <span class="input-group-text">$</span>
-                    <input type="number" class="form-control form-control-lg"
-                           name="monto" id="depositAmount"
-                           placeholder="0" min="1" required>
+                    <input type="number" class="form-control form-control-lg" name="monto" id="depositAmount"
+                        placeholder="0" min="1" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary w-100 py-2 mt-2 fw-semibold">
                 Confirmar Depósito
             </button>
         </form>
-
     </div>
+
+    <!-- Carrusel promociones -->
+    <div style="width: 100%; max-width: 900px;">
+        <div id="carouselAlke" class="carousel slide rounded shadow" data-bs-ride="true">
+            <div class="carousel-inner rounded">
+                <div class="carousel-item active">
+                    <img src="{% static 'recursos/Flyer Horizontal Promociones billetera digital (2).png' %}"
+                        class="d-block w-100" alt="Promoción 1" style="width: 100%; height: auto; object-fit: contain;">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'recursos/Flyer Horizontal Promociones billetera digital.png' %}"
+                        class="d-block w-100" alt="Promoción 2" style="width: 100%; height: auto; object-fit: contain;">
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'recursos/Flyer Horizontal Promociones billetera digital (1).png' %}"
+                        class="d-block w-100" alt="Promoción 3" style="width: 100%; height: auto; object-fit: contain;">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselAlke" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselAlke" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
 </div>
 {% endblock %}
 
