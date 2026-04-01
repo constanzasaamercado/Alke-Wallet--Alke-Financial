@@ -149,7 +149,8 @@ alke_web_base/
 │       └── Logo-Alke-Wallet.svg
 └── env/                         # Entorno virtual Python
 
-Instalación y ejecución
+## Instalación y ejecución
+
 1. Clonar el repositorio
 git clone <url-del-repositorio>
 cd alke_web_base
@@ -192,20 +193,21 @@ python manage.py runserver
 
 La aplicación estará disponible en http://127.0.0.1:8000/
 
-Rutas disponibles
+## Rutas disponibles
 
-URL	Vista	Descripción
-/	login_view	Inicio de sesión
-/register/	register_view	Registro de nuevo usuario
-/menu/	menu_view	Panel principal
-/deposit/	deposit_view	Formulario de depósito
-/send-money/	send_money_view	Transferencia a contactos
-/add-contact/	add_contact_view	Alta de contacto
-/delete-contact/<id>/	delete_contact_view	Baja de contacto
-/transactions/	transactions_view	Historial de movimientos
-/logout/	logout_view	Cerrar sesión
+| URL | Vista | Descripción |
+|---|---|---|
+| `/` | `login_view` | Inicio de sesión |
+| `/register/` | `register_view` | Registro de nuevo usuario |
+| `/menu/` | `menu_view` | Panel principal |
+| `/deposit/` | `deposit_view` | Formulario de depósito |
+| `/send-money/` | `send_money_view` | Transferencia a contactos |
+| `/add-contact/` | `add_contact_view` | Alta de contacto |
+| `/delete-contact/<id>/` | `delete_contact_view` | Baja de contacto |
+| `/transactions/` | `transactions_view` | Historial de movimientos |
+| `/logout/` | `logout_view` | Cerrar sesión |
 
-Notas
+## Notas
 
 El proyecto usa DEBUG = True. No usar en producción sin configurar ALLOWED_HOSTS y cambiar la SECRET_KEY.
 
