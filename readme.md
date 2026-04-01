@@ -193,6 +193,8 @@ python manage.py runserver
 
 La aplicación estará disponible en http://127.0.0.1:8000/
 
+---
+
 ## Rutas disponibles
 
 | URL | Vista | Descripción |
@@ -207,6 +209,7 @@ La aplicación estará disponible en http://127.0.0.1:8000/
 | `/transactions/` | `transactions_view` | Historial de movimientos |
 | `/logout/` | `logout_view` | Cerrar sesión |
 
+---
 ## Notas
 
 El proyecto usa DEBUG = True. No usar en producción sin configurar ALLOWED_HOSTS y cambiar la SECRET_KEY.
