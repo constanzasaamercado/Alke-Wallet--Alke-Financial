@@ -1,3 +1,4 @@
+```markdown
 # Alke Wallet 💳
 
 Aplicación web de billetera digital desarrollada con **Python** y **Django** como proyecto del **Módulo 7 — Integración con Bases de Datos** del curso de Desarrollo de Aplicaciones Web con Python Django, para la empresa fintech **Alke Financial**.
@@ -94,21 +95,24 @@ python manage.py makemigrations
 
 # Aplicar migraciones a la base de datos
 python manage.py migrate
+```
 
 ---
 
+## Tecnologías
 
-#Tecnologías
+- **Python 3.14**
+- **Django 6.0.3**
+- **SQLite 3** (base de datos por defecto)
+- **Bootstrap 5.3** (UI y componentes)
+- **Bootstrap Icons** (iconografía)
+- **HTML5 / CSS3 / JavaScript**
 
-Python 3.14
-Django 6.0.3
-SQLite 3 (base de datos por defecto)
-Bootstrap 5.3 (UI y componentes)
-Bootstrap Icons (iconografía)
-HTML5 / CSS3 / JavaScript
+---
 
-# Estructura del proyecto
+## Estructura del proyecto
 
+```
 alke_web_base/
 ├── manage.py
 ├── db.sqlite3
@@ -148,15 +152,22 @@ alke_web_base/
 │   └── recursos/
 │       └── Logo-Alke-Wallet.svg
 └── env/                         # Entorno virtual Python
+```
+
+---
 
 ## Instalación y ejecución
 
-1. Clonar el repositorio
+### 1. Clonar el repositorio
+
+```bash
 git clone <url-del-repositorio>
 cd alke_web_base
+```
 
-2. Crear y activar el entorno virtual
+### 2. Crear y activar el entorno virtual
 
+```bash
 python -m venv env
 
 # Windows
@@ -164,20 +175,27 @@ env\Scripts\activate
 
 # macOS / Linux
 source env/bin/activate
+```
 
-3. Instalar dependencias
+### 3. Instalar dependencias
 
+```bash
 pip install django==6.0.3
+```
 
-4. Aplicar migraciones
+### 4. Aplicar migraciones
 
+```bash
 python manage.py makemigrations
 python manage.py migrate
+```
 
-5. (Opcional) Crear datos de prueba desde el shell
+### 5. (Opcional) Crear datos de prueba desde el shell
 
+```bash
 python manage.py shell
-
+```
+```python
 from web_base.models import Usuario
 Usuario.objects.create(
     nombre='Usuario Demo',
@@ -186,12 +204,15 @@ Usuario.objects.create(
     numero_cuenta='000123456789',
     saldo=50000
 )
+```
 
-6. Iniciar el servidor de desarrollo
+### 6. Iniciar el servidor de desarrollo
 
+```bash
 python manage.py runserver
+```
 
-La aplicación estará disponible en http://127.0.0.1:8000/
+La aplicación estará disponible en `http://127.0.0.1:8000/`
 
 ---
 
@@ -210,16 +231,17 @@ La aplicación estará disponible en http://127.0.0.1:8000/
 | `/logout/` | `logout_view` | Cerrar sesión |
 
 ---
+
 ## Notas
 
-El proyecto usa DEBUG = True. No usar en producción sin configurar ALLOWED_HOSTS y cambiar la SECRET_KEY.
+- El proyecto usa `DEBUG = True`. No usar en producción sin configurar `ALLOWED_HOSTS` y cambiar la `SECRET_KEY`.
+- Las contraseñas se almacenan en texto plano únicamente con fines demostrativos. En producción se debe usar el sistema de autenticación de Django con hashing.
 
-Las contraseñas se almacenan en texto plano únicamente con fines demostrativos. En producción se debe usar el sistema de autenticación de Django con hashing.
+---
 
-Autor
+## Autor
 
-Constanza Fernanda Saa Mercado
+**Constanza Fernanda Saa Mercado**
 
-Desarrollado como proyecto final del Módulo 7 — Acceso a Datos en Aplicaciones Python Django
-
+Desarrollado como proyecto final del **Módulo 7 — Acceso a Datos en Aplicaciones Python Django**  
 Curso: Desarrollo de Aplicaciones Web con Python Django — Alke Financial
