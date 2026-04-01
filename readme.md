@@ -1,4 +1,3 @@
-```markdown
 # Alke Wallet 💳
 
 Aplicación web de billetera digital desarrollada con **Python** y **Django** como proyecto del **Módulo 7 — Integración con Bases de Datos** del curso de Desarrollo de Aplicaciones Web con Python Django, para la empresa fintech **Alke Financial**.
@@ -110,6 +109,7 @@ python manage.py migrate
 
 ---
 
+```markdown
 ## Estructura del proyecto
 
 ```
