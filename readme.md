@@ -109,7 +109,6 @@ python manage.py migrate
 
 ---
 
-```markdown
 ## Estructura del proyecto
 
 ```
